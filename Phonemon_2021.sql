@@ -8,9 +8,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema phonemon
 -- UNCOMMENT THE BELOW 3x LINES IF YOU RUN THE SCRIPT ON YOUR OWN LOCAL SERVER
 -- -----------------------------------------------------
--- DROP SCHEMA IF EXISTS `phonemon` ;
--- CREATE SCHEMA IF NOT EXISTS `phonemon` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
--- USE `phonemon` ;
+DROP SCHEMA IF EXISTS `phonemon` ;
+CREATE SCHEMA IF NOT EXISTS `phonemon` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `phonemon` ;
 
 -- -----------------------------------------------------
 -- Table `Type`
