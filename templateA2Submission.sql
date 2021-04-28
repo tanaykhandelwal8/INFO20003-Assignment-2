@@ -22,7 +22,7 @@ WHERE description LIKE "%this%";
 -- BEGIN Q2
 SELECT username, 
 	   SUM(power) as totalPhonemonPower 
-FROM Player INNER JOIN Phonemon on Player.id = Phonemon.player 
+FROM Player INNER JOIN Phonemon ON Player.id = Phonemon.player 
 WHERE username = 'Cook' or username = 'Hughes' 
 GROUP BY username;
 -- END Q2
@@ -42,40 +42,44 @@ WHERE type1 = (SELECT id FROM type WHERE title = 'grass')
 -- END Q4
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q5
-
-
-
-
-
+SELECT id as idPlayer, 
+	   username 
+FROM Player 
+WHERE id NOT IN (SELECT DISTINCT Player.id FROM Player INNER JOIN Purchase ON Player.id = Purchase.player) 
+ORDER BY id ASC;
+-- SELECT DISTINCT Player.id FROM Player INNER JOIN Purchase ON Player.id = Purchase.player: gets the ids of the people who've bought
 -- END Q5
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q6
-
-
-
-
-
+SELECT level, 
+	   SUM(price*quantity) as totalAmountSpentByAllPlayersAtLevel 
+FROM purchase INNER JOIN player on player.id = purchase.player INNER JOIN Item on purchase.item = item.id 
+GROUP BY level;
 -- END Q6
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q7
-
-
-
-
-
+-- Which item was purchased the most? (item, title, numTimesPurchased)
+SELECT item, 
+	   SUM(quantity) AS numTImesPurchased 
+FROM purchase 
+GROUP BY item ORDER BY numTimesPurchased DESC;
+-- Partially complete, won't return multiple if there are there is a tie
 -- END Q7
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q8
+-- Figure out the number of distinct food items available;
+-- then, figure out all the players who have purchased food items at least once;
+-- finally, return the players with the distinct number of food items that they have purchased.
+
+-- SELECT * FROM Purchase WHERE item IN (SELECT id FROM Item WHERE type = 'F') GROUP BY item; 
+-- SELECT * FROM Item WHERE type = 'F' -- STEP 1 COMPLETE;
 
 
-
-
-
+ -- SELECT * FROM Player GROUP BY username;
+-- Error Code: 1055. Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'phonemon.Player.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
 -- END Q8
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q9
-
-
 
 
 
