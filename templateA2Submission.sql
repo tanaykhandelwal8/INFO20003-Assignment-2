@@ -67,16 +67,14 @@ GROUP BY item ORDER BY numTimesPurchased DESC;
 -- END Q7
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q8
--- Figure out the number of distinct food items available;
--- then, figure out all the players who have purchased food items at least once;
--- finally, return the players with the distinct number of food items that they have purchased.
+ 
+ SELECT player.id as playerID, 
+	   username, 
+       COUNT(DISTINCT item) AS numberDistinctItemsPurchased 
+FROM purchase INNER JOIN player on purchase.player = player.id 
+GROUP BY player
+HAVING COUNT(DISTINCT item) = (SELECT COUNT(*) FROM item WHERE type = 'F');
 
--- SELECT * FROM Purchase WHERE item IN (SELECT id FROM Item WHERE type = 'F') GROUP BY item; 
--- SELECT * FROM Item WHERE type = 'F' -- STEP 1 COMPLETE;
-
-
- -- SELECT * FROM Player GROUP BY username;
--- Error Code: 1055. Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'phonemon.Player.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
 -- END Q8
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q9
