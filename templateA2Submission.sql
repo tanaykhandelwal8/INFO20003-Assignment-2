@@ -45,16 +45,16 @@ WHERE type1 = (SELECT id FROM type WHERE title = 'grass')
 SELECT id as idPlayer, 
 	   username 
 FROM Player 
-WHERE id NOT IN (SELECT DISTINCT Player.id FROM Player INNER JOIN Purchase ON Player.id = Purchase.player) 
+WHERE id NOT IN (SELECT purchase.player FROM Purchase INNER JOIN item ON Purchase.item = item.id WHERE type = 'F') 
 ORDER BY id ASC;
--- SELECT DISTINCT Player.id FROM Player INNER JOIN Purchase ON Player.id = Purchase.player: gets the ids of the people who've bought
 -- END Q5
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q6
 SELECT level, 
 	   SUM(price*quantity) as totalAmountSpentByAllPlayersAtLevel 
 FROM purchase INNER JOIN player on player.id = purchase.player INNER JOIN Item on purchase.item = item.id 
-GROUP BY level;
+GROUP BY level
+ORDER BY SUM(price*quantity) DESC;
 -- END Q6
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q7
@@ -78,17 +78,14 @@ HAVING COUNT(DISTINCT item) = (SELECT COUNT(*) FROM item WHERE type = 'F');
 -- END Q8
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q9
-
-
-
+SELECT ROUND(COUNT(*)/2,0) as numberOfPhonemonPairs, 
+	   ROUND(MIN(SQRT(POW(phonemon1.latitude-phonemon2.latitude,2)+POW(phonemon1.longitude-phonemon2.longitude,2)) * 100),2) as DistanceX
+FROM Phonemon as Phonemon1 CROSS JOIN Phonemon as Phonemon2 
+WHERE ROUND(SQRT(POW(phonemon1.latitude-phonemon2.latitude,2)+POW(phonemon1.longitude-phonemon2.longitude,2)) * 100,2) = (SELECT ROUND(MIN(SQRT(POW(phonemon1.latitude-phonemon2.latitude,2)+POW(phonemon1.longitude-phonemon2.longitude,2)) * 100),2) FROM Phonemon as Phonemon1 CROSS JOIN Phonemon AS Phonemon2 WHERE phonemon1.latitude <> phonemon2.latitude AND phonemon1.longitude <> phonemon2.longitude);
 -- END Q9
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- BEGIN Q10
-
-
-
-
-
+ -- SELECT type.title, COUNT(*) AS countOfSpecies FROM type INNER JOIN species on type.id = species.type1 GROUP BY type.title;
 -- END Q10
 -- ____________________________________________________________________________________________________________________________________________________________________________________________________________
 -- END OF ASSIGNMENT Do not write below this line
